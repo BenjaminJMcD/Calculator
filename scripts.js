@@ -42,8 +42,7 @@ function operate(num1, num2, operator) {
     }
 }
 
-
-// --------- Display functions ---------
+// --------- Display/Button functions ---------
 
 const one = document.getElementById("one");
 const two = document.getElementById("two");
@@ -56,27 +55,17 @@ const eight = document.getElementById("eight");
 const nine = document.getElementById("nine");
 const zero = document.getElementById("zero")
 
-const divBtn = document.getElementById("divide");
-const multBtn = document.getElementById("multiply");
-const subBtn = document.getElementById("subtract");
-const addBtn = document.getElementById("add");
-
-const equals = document.getElementById("equals");
-
-const clear = document.getElementById("clear");
-
 const currentDisplay = document.getElementById("current");
 const previous = document.getElementById("prev");
 
-
 let buildNumber = '';
-
 
 one.addEventListener('click', function pressOne() {
     clearForNew();
     newNumber = 1;
     currentDisplay.textContent = `${buildNumber}${newNumber}`
     buildNumber = currentDisplay.textContent;
+    C();
 });
 
 two.addEventListener('click', function pressTwo() {
@@ -84,6 +73,7 @@ two.addEventListener('click', function pressTwo() {
     newNumber = 2;
     currentDisplay.textContent = `${buildNumber}${newNumber}`
     buildNumber = currentDisplay.textContent;
+    C();
 });
 
 three.addEventListener('click', function pressThree() {
@@ -91,6 +81,7 @@ three.addEventListener('click', function pressThree() {
     newNumber = 3;
     currentDisplay.textContent = `${buildNumber}${newNumber}`
     buildNumber = currentDisplay.textContent;
+    C();
 });
 
 four.addEventListener('click', function pressFour() {
@@ -98,6 +89,7 @@ four.addEventListener('click', function pressFour() {
     newNumber = 4;
     currentDisplay.textContent = `${buildNumber}${newNumber}`
     buildNumber = currentDisplay.textContent;
+    C();
 });
 
 five.addEventListener('click', function pressFive() {
@@ -105,6 +97,7 @@ five.addEventListener('click', function pressFive() {
     newNumber = 5;
     currentDisplay.textContent = `${buildNumber}${newNumber}`
     buildNumber = currentDisplay.textContent;
+    C();
 });
 
 six.addEventListener('click', function pressSix() {
@@ -112,6 +105,7 @@ six.addEventListener('click', function pressSix() {
     newNumber = 6;
     currentDisplay.textContent = `${buildNumber}${newNumber}`
     buildNumber = currentDisplay.textContent;
+    C();
 });
 
 seven.addEventListener('click', function pressSeven() {
@@ -119,6 +113,7 @@ seven.addEventListener('click', function pressSeven() {
     newNumber = 7;
     currentDisplay.textContent = `${buildNumber}${newNumber}`
     buildNumber = currentDisplay.textContent;
+    C();
 });
 
 eight.addEventListener('click', function pressEight() {
@@ -126,6 +121,9 @@ eight.addEventListener('click', function pressEight() {
     newNumber = 8;
     currentDisplay.textContent = `${buildNumber}${newNumber}`
     buildNumber = currentDisplay.textContent;
+    saveOldScreen = previous.textContent;
+    saveOldNumber = oldNumber;
+    C();
 });
 
 nine.addEventListener('click', function pressNine() {
@@ -133,6 +131,7 @@ nine.addEventListener('click', function pressNine() {
     newNumber = 9;
     currentDisplay.textContent = `${buildNumber}${newNumber}`
     buildNumber = currentDisplay.textContent;
+    C();
 });
 
 zero.addEventListener('click', function pressZero() {
@@ -140,6 +139,7 @@ zero.addEventListener('click', function pressZero() {
     newNumber = 0;
     currentDisplay.textContent = `${buildNumber}${newNumber}`
     buildNumber = currentDisplay.textContent;
+    C();
 });
 
 decimal.addEventListener('click', function pressDecimal() {
@@ -147,36 +147,89 @@ decimal.addEventListener('click', function pressDecimal() {
     newNumber = ".";
     currentDisplay.textContent = `${buildNumber}${newNumber}`
     buildNumber = currentDisplay.textContent;
+    C();
 });
 
+// --------- OPERATOR FUNCTIONS ---------
+
+const divBtn = document.getElementById("divide");
+const multBtn = document.getElementById("multiply");
+const subBtn = document.getElementById("subtract");
+const addBtn = document.getElementById("add");
+
 divBtn.addEventListener('click', function div() {
-    oldNumber = currentDisplay.textContent;
-    previous.textContent = currentDisplay.textContent.concat(" ÷");
-    currentDisplay.textContent = '';
-    buildNumber = '';
-    operator = "divide";
+    if (buildNumber == '') {
+        startWithNumber();
+    }
+    else {
+        oldNumber = currentDisplay.textContent;
+        saveOldNumber = oldNumber;
+        previous.textContent = currentDisplay.textContent.concat(" ÷");
+        saveOldScreen = previous.textContent;
+        currentDisplay.textContent = '';
+        buildNumber = '';
+        operator = "divide";
+        AC();
+    }
 });
+
 multBtn.addEventListener('click', function mult() {
-    oldNumber = currentDisplay.textContent;
-    previous.textContent = currentDisplay.textContent.concat(" x");
-    currentDisplay.textContent = '';
-    buildNumber = '';
-    operator = "multiply";
+    if (buildNumber == '') {
+        startWithNumber();
+    }
+    else {
+        oldNumber = currentDisplay.textContent;
+        saveOldNumber = oldNumber;
+        previous.textContent = currentDisplay.textContent.concat(" x");
+        saveOldScreen = previous.textContent;
+        currentDisplay.textContent = '';
+        buildNumber = '';
+        operator = "multiply";
+        AC();
+    }
 });
+
 subBtn.addEventListener('click', function sub() {
-    oldNumber = currentDisplay.textContent;
-    previous.textContent = currentDisplay.textContent.concat(" -");
-    currentDisplay.textContent = '';
-    buildNumber = '';
-    operator = "subtract";
+    if (buildNumber == '') {
+        startWithNumber();
+    }
+    else {
+        oldNumber = currentDisplay.textContent;
+        saveOldNumber = oldNumber;
+        previous.textContent = currentDisplay.textContent.concat(" -");
+        saveOldScreen = previous.textContent;
+        currentDisplay.textContent = '';
+        buildNumber = '';
+        operator = "subtract";
+        AC();
+    }
 });
+
 addBtn.addEventListener('click', function add() {
-    oldNumber = currentDisplay.textContent;
-    previous.textContent = currentDisplay.textContent.concat(" +");
-    currentDisplay.textContent = '';
-    buildNumber = '';
-    operator = "add";
+    if (buildNumber == '') {
+        startWithNumber();
+    }
+    else {
+        oldNumber = currentDisplay.textContent;
+        saveOldNumber = oldNumber;
+        previous.textContent = currentDisplay.textContent.concat(" +");
+        saveOldScreen = previous.textContent;
+        currentDisplay.textContent = '';
+        buildNumber = '';
+        operator = "add";
+        AC();
+    }
 });
+
+function startWithNumber() {
+        previous.textContent = saveOldScreen;
+        oldNumber = saveOldNumber;
+        buildNumber = '';
+}
+
+// --------- EQUALS FUNCTION --------
+
+const equals = document.getElementById("equals");
 
 equals.addEventListener('click', function operation() {
     previous.textContent = previous.textContent.concat(` ${currentDisplay.textContent} =`);
@@ -185,9 +238,13 @@ equals.addEventListener('click', function operation() {
     num2 = parseFloat(currentDisplay.textContent);
     operate(num1, num2, operator);
     currentDisplay.textContent = total;
+    buildNumber = currentDisplay.textContent;
+    AC();
 });
 
-// --------- Ambitious Clear (AC / C) functions ---------
+// --------- CLEAR (AC / C) FUNCTIONS ---------
+
+const clear = document.getElementById("clear");
 
 function clearForNew() {
     if (previous.textContent.includes("=")) {
@@ -195,27 +252,60 @@ function clearForNew() {
     }
 }
 
-function clearScreen() {
-    currentDisplay.textContent = '';
-    previous.textContent = '';
-    buildNumber = '';
-};
+function AC() {
+    clear.textContent = "AC";
+    clear.addEventListener('click', function clearAll() {
+        previous.textContent = '';
+        currentDisplay.textContent = '';
+        buildNumber = '';
+        oldNumber = '';
+    });
+}
 
-clear.addEventListener('click', clearScreen);
+function C() {
+    clear.textContent = "C";
+    clear.addEventListener('click', function clearCurrent() {
+        previous.textContent = saveOldScreen;
+        oldNumber = saveOldNumber
+        buildNumber = '';
+        currentDisplay.textContent = buildNumber;
+    });
+}
 
-// function clearCurrent() {
-//     save = previous.textContent;
-//     currentDisplay.textContent = '';
-//     buildNumber = '';
-//     clear.textContent = "AC";
-// }
+AC();
 
-// function ACButton() {
-//         clear.textContent = "AC";
-//         clear.addEventListener('click', clearScreen)
-// }
+// ---------- TOGGLE NEG ---------
 
-// function CButton() {
-//         clear.textContent = "C";
-//         clear.addEventListener('click', clearCurrent)
-// }
+const toggleNeg = document.getElementById("toggleNeg");
+
+function negate() {
+    if (currentDisplay.textContent.includes("-")) {
+        currentDisplay.textContent = buildNumber.substring(1);
+        buildNumber = currentDisplay.textContent;
+    }
+    else {
+        currentDisplay.textContent = `-${buildNumber}`;
+        buildNumber = currentDisplay.textContent;
+    }
+}
+
+toggleNeg.addEventListener('click', negate);
+
+// ---------- PERCENT BUTTON ---------
+
+const percentBtn = document.getElementById("percent");
+
+function percent() {
+    if (buildNumber == null) {
+        currentDisplay.textContent = '';
+        buildNumber = '';
+        
+    }
+    else {
+        percentage = parseFloat(buildNumber) / 100;
+        currentDisplay.textContent = percentage;
+        buildNumber = currentDisplay.textContent;
+    }
+}
+
+percentBtn.addEventListener('click', percent);
