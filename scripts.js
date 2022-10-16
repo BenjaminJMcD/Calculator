@@ -21,12 +21,6 @@ function subtraction(num1, num2) {
     return total;
 }
 
-// num1 = 12;
-// num2 = 2;
-// operator = "multiply";
-// operate(num1, num2, operator);
-// console.log(total);
-
 function operate(num1, num2, operator) {
     if (operator == "divide") {
         division(num1, num2);
@@ -65,6 +59,10 @@ one.addEventListener('click', function pressOne() {
     newNumber = 1;
     currentDisplay.textContent = `${buildNumber}${newNumber}`
     buildNumber = currentDisplay.textContent;
+    if (previous.textContent !== '') {
+        saveOldScreen = previous.textContent;
+        saveOldNumber = oldNumber;
+    }
     C();
 });
 
@@ -73,6 +71,10 @@ two.addEventListener('click', function pressTwo() {
     newNumber = 2;
     currentDisplay.textContent = `${buildNumber}${newNumber}`
     buildNumber = currentDisplay.textContent;
+    if (previous.textContent !== '') {
+        saveOldScreen = previous.textContent;
+        saveOldNumber = oldNumber;
+    }
     C();
 });
 
@@ -81,6 +83,10 @@ three.addEventListener('click', function pressThree() {
     newNumber = 3;
     currentDisplay.textContent = `${buildNumber}${newNumber}`
     buildNumber = currentDisplay.textContent;
+    if (previous.textContent !== '') {
+        saveOldScreen = previous.textContent;
+        saveOldNumber = oldNumber;
+    }
     C();
 });
 
@@ -89,6 +95,10 @@ four.addEventListener('click', function pressFour() {
     newNumber = 4;
     currentDisplay.textContent = `${buildNumber}${newNumber}`
     buildNumber = currentDisplay.textContent;
+    if (previous.textContent !== '') {
+        saveOldScreen = previous.textContent;
+        saveOldNumber = oldNumber;
+    }
     C();
 });
 
@@ -97,6 +107,10 @@ five.addEventListener('click', function pressFive() {
     newNumber = 5;
     currentDisplay.textContent = `${buildNumber}${newNumber}`
     buildNumber = currentDisplay.textContent;
+    if (previous.textContent !== '') {
+        saveOldScreen = previous.textContent;
+        saveOldNumber = oldNumber;
+    }
     C();
 });
 
@@ -105,6 +119,10 @@ six.addEventListener('click', function pressSix() {
     newNumber = 6;
     currentDisplay.textContent = `${buildNumber}${newNumber}`
     buildNumber = currentDisplay.textContent;
+    if (previous.textContent !== '') {
+        saveOldScreen = previous.textContent;
+        saveOldNumber = oldNumber;
+    }
     C();
 });
 
@@ -113,6 +131,10 @@ seven.addEventListener('click', function pressSeven() {
     newNumber = 7;
     currentDisplay.textContent = `${buildNumber}${newNumber}`
     buildNumber = currentDisplay.textContent;
+    if (previous.textContent !== '') {
+        saveOldScreen = previous.textContent;
+        saveOldNumber = oldNumber;
+    }
     C();
 });
 
@@ -121,8 +143,10 @@ eight.addEventListener('click', function pressEight() {
     newNumber = 8;
     currentDisplay.textContent = `${buildNumber}${newNumber}`
     buildNumber = currentDisplay.textContent;
-    saveOldScreen = previous.textContent;
-    saveOldNumber = oldNumber;
+    if (previous.textContent !== '') {
+        saveOldScreen = previous.textContent;
+        saveOldNumber = oldNumber;
+    }
     C();
 });
 
@@ -131,6 +155,10 @@ nine.addEventListener('click', function pressNine() {
     newNumber = 9;
     currentDisplay.textContent = `${buildNumber}${newNumber}`
     buildNumber = currentDisplay.textContent;
+    if (previous.textContent !== '') {
+        saveOldScreen = previous.textContent;
+        saveOldNumber = oldNumber;
+    }
     C();
 });
 
@@ -139,14 +167,24 @@ zero.addEventListener('click', function pressZero() {
     newNumber = 0;
     currentDisplay.textContent = `${buildNumber}${newNumber}`
     buildNumber = currentDisplay.textContent;
+    if (previous.textContent !== '') {
+        saveOldScreen = previous.textContent;
+        saveOldNumber = oldNumber;
+    }
     C();
 });
 
 decimal.addEventListener('click', function pressDecimal() {
     clearForNew();
-    newNumber = ".";
-    currentDisplay.textContent = `${buildNumber}${newNumber}`
-    buildNumber = currentDisplay.textContent;
+    if (!currentDisplay.textContent.includes(".")) {
+        newNumber = ".";
+        currentDisplay.textContent = `${buildNumber}${newNumber}`
+        buildNumber = currentDisplay.textContent;
+    }
+    if (previous.textContent !== '') {
+        saveOldScreen = previous.textContent;
+        saveOldNumber = oldNumber;
+    }
     C();
 });
 
@@ -157,9 +195,25 @@ const multBtn = document.getElementById("multiply");
 const subBtn = document.getElementById("subtract");
 const addBtn = document.getElementById("add");
 
+
 divBtn.addEventListener('click', function div() {
     if (buildNumber == '') {
         startWithNumber();
+    }
+    else if (previous.textContent.endsWith("+") || 
+        previous.textContent.endsWith("-") ||
+        previous.textContent.endsWith("÷") ||
+        previous.textContent.endsWith("x")) {
+            num1 = parseFloat(oldNumber)
+            num2 = parseFloat(currentDisplay.textContent);
+            operate(num1, num2, operator);
+            buildNumber = '';
+            currentDisplay.textContent = buildNumber;
+            previous.textContent = `${parseFloat(total.toFixed(10))} ÷`;
+            oldNumber = total;
+            saveOldNumber = oldNumber;
+            operator = "divide";
+            AC();
     }
     else {
         oldNumber = currentDisplay.textContent;
@@ -177,6 +231,21 @@ multBtn.addEventListener('click', function mult() {
     if (buildNumber == '') {
         startWithNumber();
     }
+    else if (previous.textContent.endsWith("+") || 
+        previous.textContent.endsWith("-") ||
+        previous.textContent.endsWith("÷") ||
+        previous.textContent.endsWith("x")) {
+            num1 = parseFloat(oldNumber)
+            num2 = parseFloat(currentDisplay.textContent);
+            operate(num1, num2, operator);
+            buildNumber = '';
+            currentDisplay.textContent = buildNumber;
+            previous.textContent = `${parseFloat(total.toFixed(10))} x`;
+            oldNumber = total;
+            saveOldNumber = oldNumber;
+            operator = "multiply";
+            AC();
+    }
     else {
         oldNumber = currentDisplay.textContent;
         saveOldNumber = oldNumber;
@@ -192,6 +261,21 @@ multBtn.addEventListener('click', function mult() {
 subBtn.addEventListener('click', function sub() {
     if (buildNumber == '') {
         startWithNumber();
+    }
+    else if (previous.textContent.endsWith("+") || 
+        previous.textContent.endsWith("-") ||
+        previous.textContent.endsWith("÷") ||
+        previous.textContent.endsWith("x")) {
+            num1 = parseFloat(oldNumber)
+            num2 = parseFloat(currentDisplay.textContent);
+            operate(num1, num2, operator);
+            buildNumber = '';
+            currentDisplay.textContent = buildNumber;
+            previous.textContent = `${parseFloat(total.toFixed(10))} -`;
+            oldNumber = total;
+            saveOldNumber = oldNumber;
+            operator = "subtract";
+            AC();
     }
     else {
         oldNumber = currentDisplay.textContent;
@@ -209,6 +293,21 @@ addBtn.addEventListener('click', function add() {
     if (buildNumber == '') {
         startWithNumber();
     }
+    else if (previous.textContent.endsWith("+") || 
+        previous.textContent.endsWith("-") ||
+        previous.textContent.endsWith("÷") ||
+        previous.textContent.endsWith("x")) {
+            num1 = parseFloat(oldNumber)
+            num2 = parseFloat(currentDisplay.textContent);
+            operate(num1, num2, operator);
+            buildNumber = '';
+            currentDisplay.textContent = buildNumber;
+            previous.textContent = `${parseFloat(total.toFixed(10))} +`;
+            oldNumber = total;
+            saveOldNumber = oldNumber;
+            operator = "add";
+            AC();
+    }
     else {
         oldNumber = currentDisplay.textContent;
         saveOldNumber = oldNumber;
@@ -222,8 +321,10 @@ addBtn.addEventListener('click', function add() {
 });
 
 function startWithNumber() {
+    if (previous.textContent !== '') {
         previous.textContent = saveOldScreen;
         oldNumber = saveOldNumber;
+    }
         buildNumber = '';
 }
 
@@ -231,16 +332,39 @@ function startWithNumber() {
 
 const equals = document.getElementById("equals");
 
-equals.addEventListener('click', function operation() {
-    previous.textContent = previous.textContent.concat(` ${currentDisplay.textContent} =`);
-    buildNumber = '';
-    num1 = parseFloat(oldNumber);
-    num2 = parseFloat(currentDisplay.textContent);
-    operate(num1, num2, operator);
-    currentDisplay.textContent = total;
-    buildNumber = currentDisplay.textContent;
-    AC();
-});
+equals.addEventListener('click', operation);
+
+function operation() {
+    if (buildNumber == '' && oldNumber !== '') {
+        oldNumber = saveOldNumber;
+        previous.textContent = saveOldScreen;
+        buildNumber = '';
+        AC();
+    }
+    else if (oldNumber == '') {
+        previous.textContent = '';
+        currentDisplay.textContent = buildNumber;
+        AC();
+    }
+    else if (previous.textContent.includes("=")){
+        oldNumber = saveOldNumber;
+        previous.textContent = saveOldScreen;
+        buildNumber = currentDisplay.textContent;
+        AC();    
+    }
+    else {
+        previous.textContent = previous.textContent.concat(` ${currentDisplay.textContent} =`);
+        buildNumber = '';
+        num1 = parseFloat(oldNumber);
+        num2 = parseFloat(currentDisplay.textContent);
+        operate(num1, num2, operator);
+        currentDisplay.textContent = parseFloat(total.toFixed(10));
+        buildNumber = currentDisplay.textContent;
+        saveOldScreen = previous.textContent;
+        saveOldNumber = oldNumber;
+        AC();
+    }
+}
 
 // --------- CLEAR (AC / C) FUNCTIONS ---------
 
@@ -249,6 +373,11 @@ const clear = document.getElementById("clear");
 function clearForNew() {
     if (previous.textContent.includes("=")) {
         previous.textContent = '';
+        buildNumber = '';
+    }
+    if (previous.textContent == '') {
+        saveOldScreen = '';
+        oldNumber = '';
     }
 }
 
@@ -269,6 +398,7 @@ function C() {
         oldNumber = saveOldNumber
         buildNumber = '';
         currentDisplay.textContent = buildNumber;
+        AC();
     });
 }
 
@@ -296,14 +426,14 @@ toggleNeg.addEventListener('click', negate);
 const percentBtn = document.getElementById("percent");
 
 function percent() {
-    if (buildNumber == null) {
+    if (buildNumber == '') {
         currentDisplay.textContent = '';
         buildNumber = '';
         
     }
     else {
         percentage = parseFloat(buildNumber) / 100;
-        currentDisplay.textContent = percentage;
+        currentDisplay.textContent = parseFloat(percentage.toFixed(10));
         buildNumber = currentDisplay.textContent;
     }
 }
